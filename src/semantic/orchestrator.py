@@ -1,7 +1,19 @@
 #!/usr/bin/env python3
 """
-Tier-2 Semantic Orchestrator
-Transforms atomic behaviors into semantic envelopes for Tier-3
+TIER-2: Semantic Library
+Pure deterministic transformation library with no runtime/service logic.
+
+Responsibilities:
+1. Transform Tier-1 atomic behaviors → semantic objects
+2. Create opaque envelopes for Tier-3 consumption
+3. Maintain versioned schema compliance
+
+Prohibited:
+- Long-running processes
+- Signal handling
+- Queue management
+- Metrics collection
+- Service orchestration
 """
 import json
 import base64
@@ -23,30 +35,57 @@ from ..constants import (
 
 
 class SemanticOrchestrator:
-    """Creates semantic envelopes from atomic behaviors"""
-
+    """
+    Pure library class for semantic transformation.
+    
+    Usage:
+        orchestrator = SemanticOrchestrator()
+        semantic = orchestrator.transform_to_semantic(atomic_behavior)
+        envelope = orchestrator.create_envelope(semantic)
+    
+    No runtime, no services, no state beyond transformation.
+    """
+    
     def __init__(self):
-        self.envelopes_created = 0
-        self.transformations_performed = 0
-
+        """
+        Initialize orchestrator.
+        
+        Note: No service initialization, no monitoring setup.
+        """
+        # Library-only statistics (volatile, not persisted)
+        self._envelopes_created = 0
+        self._transformations_performed = 0
+    
     def transform_to_semantic(self, atomic_behavior: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Transform atomic behavior data to semantic format
-
+        Transform Tier-1 atomic behavior to semantic format.
+        
         Args:
-            atomic_behavior: Raw atomic behavior from Tier-1
-
+            atomic_behavior: Dictionary from Tier-1 with keys:
+                - type: str (atomic behavior type)
+                - intensity: float (0.0-1.0)
+                - duration: int (milliseconds)
+                - features: List[str] (optional)
+                - metadata: Dict (optional)
+                - user_segment: str (optional)
+                - premium_indicator: bool (optional)
+                - session_id: str (optional)
+        
         Returns:
-            Semantic data ready for envelope creation
+            Semantic data dictionary ready for envelope creation.
+            
+        Raises:
+            TypeError: If input types are incorrect
+            ValueError: If values are structurally invalid
         """
-        self.transformations_performed += 1
-
-        # Extract basic fields
+        self._transformations_performed += 1
+        
+        # Extract basic fields with defaults
         behavior_type = atomic_behavior.get("type", DEFAULT_BEHAVIOR_TYPE)
         intensity = atomic_behavior.get("intensity", DEFAULT_INTENSITY)
         duration = atomic_behavior.get("duration", DEFAULT_DURATION)
         features = atomic_behavior.get("features", [])
-
+        
         # Create semantic data structure
         semantic_data = {
             "behavior_type": self._map_behavior_type(behavior_type),
@@ -57,28 +96,35 @@ class SemanticOrchestrator:
             "_semantic": True,
             "_timestamp": datetime.utcnow().isoformat() + "Z"
         }
-
+        
         # Add optional fields if present
         optional_fields = ["metadata", "premium_indicator", "user_segment", "session_id"]
         for field in optional_fields:
             if field in atomic_behavior:
                 semantic_data[field] = atomic_behavior[field]
-
+        
         return semantic_data
-
+    
     def create_envelope(self, semantic_data: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Create opaque envelope from semantic data
-
+        Create opaque envelope from semantic data for Tier-3.
+        
         Args:
-            semantic_data: Semantic data from transform_to_semantic()
-
+            semantic_data: Output from transform_to_semantic()
+            
         Returns:
-            Opaque envelope for Tier-3 consumption
+            Opaque envelope with structure:
+                - envelope_id: str (unique identifier)
+                - timestamp: str (ISO-8601 with Z)
+                - payload: str (base64-encoded semantic data)
+                - signature: str (data integrity signature)
+        
+        Raises:
+            TypeError: If semantic_data has incorrect types
         """
         # Validate and prepare semantic data
         validated_data = self._validate_semantic_data(semantic_data)
-
+        
         # Create envelope
         envelope = {
             "envelope_id": self._generate_envelope_id(),
@@ -86,22 +132,26 @@ class SemanticOrchestrator:
             "payload": self._encode_payload(validated_data),
             "signature": self._generate_signature(validated_data)
         }
-
-        self.envelopes_created += 1
+        
+        self._envelopes_created += 1
         return envelope
-
+    
+    # -----------------------------------------------------------------
+    # Internal helper methods (library-only, no runtime dependencies)
+    # -----------------------------------------------------------------
+    
     def _map_behavior_type(self, atomic_type: str) -> str:
-        """Map atomic behavior type to semantic type"""
+        """Map atomic behavior type to semantic type."""
         return BEHAVIOR_TYPES.get(atomic_type, atomic_type)
-
+    
     def _normalize_intensity(self, intensity: float) -> float:
-        """Ensure intensity is within valid bounds"""
+        """Ensure intensity is within valid bounds (0.0-1.0)."""
         return max(INTENSITY_MIN, min(intensity, INTENSITY_MAX))
-
+    
     def _validate_semantic_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Ensure semantic data has all required fields"""
+        """Ensure semantic data has all required fields."""
         validated = data.copy()
-
+        
         # Ensure required fields exist
         required = ["behavior_type", "intensity", "duration", "features_used"]
         for field in required:
@@ -114,38 +164,54 @@ class SemanticOrchestrator:
                     validated[field] = DEFAULT_DURATION
                 elif field == "features_used":
                     validated[field] = []
-
+        
         # Ensure version and semantic marker
         if "_version" not in validated:
             validated["_version"] = TIER3_ENVELOPE_VERSION
         if "_semantic" not in validated:
             validated["_semantic"] = True
-
+        
         return validated
-
+    
     def _generate_envelope_id(self) -> str:
-        """Generate unique envelope ID"""
+        """Generate unique envelope ID."""
         timestamp = datetime.utcnow().timestamp()
         microsecond = datetime.utcnow().microsecond
         return f"{ENVELOPE_ID_PREFIX}{timestamp}_{microsecond}"
-
+    
     def _encode_payload(self, data: Dict[str, Any]) -> str:
-        """Encode semantic data as opaque payload"""
+        """Encode semantic data as opaque payload."""
         # Sort keys for deterministic encoding
         sorted_data = dict(sorted(data.items()))
         json_str = json.dumps(sorted_data, separators=(',', ':'))
         encoded = base64.b64encode(json_str.encode('utf-8')).decode('utf-8')
         return encoded
-
+    
     def _generate_signature(self, data: Dict[str, Any]) -> str:
-        """Generate signature for data integrity"""
+        """Generate signature for data integrity."""
         data_str = json.dumps(data, separators=(',', ':'))
         hash_obj = hashlib.sha256(data_str.encode())
         return f"{SIGNATURE_PREFIX}{hash_obj.hexdigest()[:8]}"
-
-    def get_stats(self) -> Dict[str, int]:
-        """Get orchestrator statistics"""
+    
+    # -----------------------------------------------------------------
+    # Library statistics (volatile, for debugging only)
+    # -----------------------------------------------------------------
+    
+    def get_library_stats(self) -> Dict[str, int]:
+        """
+        Get library statistics (volatile, resets on instance destruction).
+        
+        Returns:
+            Dictionary with:
+                - envelopes_created: Number of envelopes created
+                - transformations_performed: Number of transformations performed
+        """
         return {
-            "envelopes_created": self.envelopes_created,
-            "transformations_performed": self.transformations_performed
+            "envelopes_created": self._envelopes_created,
+            "transformations_performed": self._transformations_performed
         }
+    
+    def reset_stats(self) -> None:
+        """Reset library statistics (for testing/demo purposes)."""
+        self._envelopes_created = 0
+        self._transformations_performed = 0
