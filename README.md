@@ -1,13 +1,9 @@
-# SeekReap Tier-2: Semantic Layer
+# SeekReap Tier-2: Structural Transformation Library
 
-**System ID:** SR-T2  
-**Repository:** https://github.com/Brandsiya/SeekReap-Tier-2-Semantic.git  
-**Status:** PRIVATE - Contains semantic transformation logic  
-**Version:** v0.1.0-tier2  
-**Release Date:** 2024-01-28
+> **ARCHITECTURALLY LOCKED**: Pure structural transformation only. All semantic interpretation belongs to Tier-3.
 
-## Purpose
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/Brandsiya/SeekReap-Tier-2-Semantic)
+[![Version](https://img.shields.io/badge/Version-v2.0.0--structural--lock-green)](https://github.com/Brandsiya/SeekReap-Tier-2-Semantic/releases/tag/v2.0.0-structural-lock)
+[![Architecture](https://img.shields.io/badge/Architecture-Structural%20Only-orange)](./ARCHITECTURAL_LOCK_TIER2.md)
 
-Tier-2 transforms atomic behavior data from Tier-1 into **opaque, semantic-neutral envelopes** for Tier-3 consumption. This layer maintains strict separation between public behavior collection and private monetization logic.
-
-## Architecture Position
+## 🏗️ Architectural Position

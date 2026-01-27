@@ -1,0 +1,77 @@
+name: Architectural Enforcement
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  enforce-architectural-purity:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Check for semantic contamination
+      run: |
+        echo "🔍 Checking for architectural violations..."
+        
+        # Critical: Must NOT contain semantic guarantees
+        echo "1. Checking for semantic guarantee references..."
+        if grep -r "semantic.*guarantee" src/ --include="*.py"; then
+          echo "❌ ERROR: Semantic guarantees detected in Tier-2 code"
+          exit 1
+        fi
+        
+        # Critical: Must NOT contain business validation
+        echo "2. Checking for business validation..."
+        if grep -r "validate.*business" src/ --include="*.py" || \
+           grep -r "business.*rule" src/ --include="*.py"; then
+          echo "❌ ERROR: Business validation detected in Tier-2 code"
+          exit 1
+        fi
+        
+        # Critical: Must only export StructuralOrchestrator
+        echo "3. Checking public API..."
+        if grep -r "SemanticOrchestrator" src/ --include="*.py"; then
+          echo "❌ ERROR: SemanticOrchestrator references found"
+          exit 1
+        fi
+        
+        # Package name must be structural
+        echo "4. Checking package name..."
+        if ! grep -q "seekreap-tier2-structural" setup.py; then
+          echo "❌ ERROR: Package name must be seekreap-tier2-structural"
+          exit 1
+        fi
+        
+        # Module must be structural
+        echo "5. Checking module structure..."
+        if [ ! -d "src/structural" ]; then
+          echo "❌ ERROR: src/structural/ directory must exist"
+          exit 1
+        fi
+        
+        echo "✅ All architectural checks passed!"
+        
+    - name: Run structural tests
+      run: |
+        echo "🧪 Running structural tests..."
+        python -m pytest tests/ -v
+        
+    - name: Verify imports work
+      run: |
+        echo "🔧 Testing imports..."
+        python -c "
+        import sys
+        sys.path.insert(0, 'src')
+        from structural.orchestrator import StructuralOrchestrator, verify_envelope_structure
+        print('✅ Import successful')
+        
+        # Quick functional test
+        orchestrator = StructuralOrchestrator()
+        envelope = orchestrator.create_envelope({'test': 'data'})
+        print(f'✅ Envelope created with keys: {list(envelope.keys())}')
+        print(f'✅ Structure valid: {verify_envelope_structure(envelope)}')
+        "
