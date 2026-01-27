@@ -20,19 +20,18 @@ import hashlib
 from datetime import datetime
 from typing import Dict, Any
 
-# Use relative import
-from . import constants
-
-# Or import specific constants
-TIER3_ENVELOPE_VERSION = constants.TIER3_ENVELOPE_VERSION
-BEHAVIOR_TYPES = constants.BEHAVIOR_TYPES
-INTENSITY_MIN = constants.INTENSITY_MIN
-INTENSITY_MAX = constants.INTENSITY_MAX
-ENVELOPE_ID_PREFIX = constants.ENVELOPE_ID_PREFIX
-SIGNATURE_PREFIX = constants.SIGNATURE_PREFIX
-DEFAULT_BEHAVIOR_TYPE = constants.DEFAULT_BEHAVIOR_TYPE
-DEFAULT_INTENSITY = constants.DEFAULT_INTENSITY
-DEFAULT_DURATION = constants.DEFAULT_DURATION
+# Use absolute import path
+from src.constants import (
+    TIER3_ENVELOPE_VERSION,
+    BEHAVIOR_TYPES,
+    INTENSITY_MIN,
+    INTENSITY_MAX,
+    ENVELOPE_ID_PREFIX,
+    SIGNATURE_PREFIX,
+    DEFAULT_BEHAVIOR_TYPE,
+    DEFAULT_INTENSITY,
+    DEFAULT_DURATION,
+)
 
 
 class SemanticOrchestrator:
