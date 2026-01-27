@@ -10,8 +10,8 @@ import os
 # Add src to path for testing (temporary fix)
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from semantic.orchestrator import SemanticOrchestrator
-import semantic.constants as constants
+from src.semantic.orchestrator import SemanticOrchestrator
+from src.semantic import constants
 
 
 def test_constants():

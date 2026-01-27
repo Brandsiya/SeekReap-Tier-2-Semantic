@@ -1,6 +1,13 @@
 """
-Semantic module for Tier-2
-"""
-from .orchestrator import SemanticOrchestrator
+Semantic module for Tier-2.
+Pure package marker.
 
-__all__ = ["SemanticOrchestrator"]
+Design Contract:
+- No eager imports
+- No runtime initialization
+- Pure module declaration
+- Deterministic import graph
+
+Tier-2: Semantic transformation library only.
+"""
+__all__ = []
