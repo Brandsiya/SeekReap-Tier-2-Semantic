@@ -5,7 +5,7 @@ Setup configuration for Tier-2 Semantic Layer
 from setuptools import setup, find_packages
 
 setup(
-    name="seekreap-tier2-semantic",
+    name="seekreap-tier2-structural",
     version="0.1.0",
     description="SeekReap Tier-2: Semantic Layer - Envelope creation and transformation",
     author="SeekReap Team",

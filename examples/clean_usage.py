@@ -11,7 +11,7 @@ import os
 # Add src to path for this example
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from semantic.orchestrator import SemanticOrchestrator
+from structural.orchestrator import StructuralOrchestrator
 
 def demonstrate_clean_usage():
     """Demonstrate clean library usage pattern."""
@@ -19,7 +19,7 @@ def demonstrate_clean_usage():
     print("=" * 40)
 
     # Instantiate library
-    orchestrator = SemanticOrchestrator()
+    orchestrator = StructuralOrchestrator()
 
     # Example Tier-1 atomic behavior
     atomic = {
@@ -33,13 +33,13 @@ def demonstrate_clean_usage():
     print(json.dumps(atomic, indent=2))
 
     # Transform using library
-    semantic = orchestrator.transform_to_semantic(atomic)
+    structural = orchestrator.transform_to_structural(atomic)
     print("\nSemantic transformation (Tier-2):")
-    print(f"  Type: {semantic['behavior_type']}")
-    print(f"  Intensity: {semantic['intensity']}")
+    print(f"  Type: {structural['behavior_type']}")
+    print(f"  Intensity: {structural['intensity']}")
 
     # Create envelope using library
-    envelope = orchestrator.create_envelope(semantic)
+    envelope = orchestrator.create_envelope(structural)
     print("\nEnvelope for Tier-3:")
     print(f"  ID: {envelope['envelope_id']}")
     print(f"  Timestamp: {envelope['timestamp']}")
