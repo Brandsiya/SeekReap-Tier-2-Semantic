@@ -5,7 +5,7 @@
 ### Core Components
 1. **orchestrate()** - Creates structural envelopes with deep copies
 2. **validate_structural_policy()** - Pure validation function
-3. **create_semantic_envelope()** - Legacy compatibility function
+3. **create_structural_envelope()** - Legacy compatibility function
 
 ### Key Properties (Verified by Tests)
 1. **Structural Invariance** - All envelopes have required fields

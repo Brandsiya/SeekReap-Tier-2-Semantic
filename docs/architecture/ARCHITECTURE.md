@@ -2,7 +2,7 @@
 
 ## Overview
 
-Tier-2 Structural Envelopes provide a structured approach to workflow composition and orchestration in multi-tier systems. This architecture enables semantic meaning to be added to data flows while maintaining strict boundaries between architectural tiers.
+Tier-2 Structural Envelopes provide a structured approach to workflow composition and orchestration in multi-tier systems. This architecture enables structured data flow with strict boundaries while preserving between architectural tiers.
 
 ## Core Architectural Principles
 
@@ -50,7 +50,7 @@ Tier-2 Structural Envelopes provide a structured approach to workflow compositio
 - Clear semantic structure
 
 **Format Details**:
-- `tier2-semantic-`: Prefix identifying Tier-2 structural envelopes
+- `tier2-structural-`: Prefix identifying Tier-2 structural envelopes
 - `{policy}`: Orchestration policy applied (e.g., "default")
 - `{timestamp_ms}`: Millisecond timestamp for ordering
 - `{random}`: Random UUID component for uniqueness guarantee
