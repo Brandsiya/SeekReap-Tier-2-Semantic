@@ -50,7 +50,7 @@ Tier-2 Semantic Envelopes provide a semantic approach to workflow composition an
 - Clear semantic structure
 
 **Format Details**:
-- `tier2-structural-`: Prefix identifying Tier-2 semantic envelopes
+- `tier2-semantic-`: Prefix identifying Tier-2 semantic envelopes
 - `{policy}`: Orchestration policy applied (e.g., "default")
 - `{timestamp_ms}`: Millisecond timestamp for ordering
 - `{random}`: Random UUID component for uniqueness guarantee
