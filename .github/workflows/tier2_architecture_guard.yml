@@ -1,0 +1,46 @@
+name: Tier-2 Architecture Guard
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  tier2-guard:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install test dependencies
+        run: |
+          pip install pytest pytest-cov
+
+      - name: Enforce Tier-2 purity
+        run: |
+          echo "Checking for forbidden runtime constructs..."
+          ! grep -R "while True" tier2_core/ || exit 1
+          ! grep -R "signal.signal" tier2_core/ || exit 1
+          ! grep -R "threading" tier2_core/ || exit 1
+          ! grep -R "async def" tier2_core/ || exit 1
+          ! grep -R "Queue" tier2_core/ || exit 1
+          ! grep -R "daemon" tier2_core/ || exit 1
+          ! grep -R "spawn" tier2_core/ || exit 1
+          echo "✅ No forbidden runtime constructs found"
+
+      - name: Run Tier-2 test suite
+        run: |
+          pytest tier2_tests \
+            --cov=tier2_core \
+            --cov-fail-under=80
+
+      - name: Validate Tier-2 Charter presence
+        run: |
+          test -f docs/architecture/TIER2_SEMANTIC_RESPONSIBILITY_CHARTER.md
+          echo "✅ Tier-2 charter present"
