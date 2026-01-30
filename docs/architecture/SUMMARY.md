@@ -3,9 +3,9 @@
 ## Quick Reference
 
 ### Core Components
-1. **orchestrate()** - Creates structural envelopes with deep copies
-2. **validate_structural_policy()** - Pure validation function
-3. **create_structural_envelope()** - Legacy compatibility function
+1. **orchestrate()** - Creates semantic envelopes with deep copies
+2. **validate_semantic_policy()** - Pure validation function
+3. **create_semantic_envelope()** - Legacy compatibility function
 
 ### Key Properties (Verified by Tests)
 1. **Structural Invariance** - All envelopes have required fields
@@ -51,7 +51,7 @@
 
 ### Basic Usage
 ```python
-from tier2_core.orchestration import orchestrate, validate_structural_policy
+from tier2_core.orchestration import orchestrate, validate_semantic_policy
 
 # Create an envelope
 envelope = orchestrate(
@@ -60,4 +60,4 @@ envelope = orchestrate(
 )
 
 # Validate the envelope
-is_valid = validate_structural_policy(envelope)
+is_valid = validate_semantic_policy(envelope)

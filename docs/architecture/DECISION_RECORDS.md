@@ -12,7 +12,7 @@
 ### ADR-002: Signature Format
 **Status**: Accepted  
 **Context**: Need unique, traceable envelope identifiers  
-**Decision**: `tier2-structural-{policy}-{timestamp_ms}-{random}`  
+**Decision**: `tier2-semantic-{policy}-{timestamp_ms}-{random}`  
 **Consequences**: Policy traceability, temporal ordering, uniqueness  
 **Alternatives**: Simple UUID, cryptographic hash, sequential IDs
 
