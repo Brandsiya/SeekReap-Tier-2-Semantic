@@ -1,8 +1,8 @@
-# Tier-2 Semantic Envelope Architecture
+# Tier-2 Structural Envelope Architecture
 
 ## Overview
 
-Tier-2 Semantic Envelopes provide a structured approach to workflow composition and orchestration in multi-tier systems. This architecture enables semantic meaning to be added to data flows while maintaining strict boundaries between architectural tiers.
+Tier-2 Structural Envelopes provide a structured approach to workflow composition and orchestration in multi-tier systems. This architecture enables semantic meaning to be added to data flows while maintaining strict boundaries between architectural tiers.
 
 ## Core Architectural Principles
 
@@ -42,7 +42,7 @@ Tier-2 Semantic Envelopes provide a structured approach to workflow composition 
 - Immutable data classes: Breaks backward compatibility
 
 ### AD-2: Signature Format
-**Decision**: `tier2-semantic-{policy}-{timestamp_ms}-{random}`
+**Decision**: `tier2-structural-{policy}-{timestamp_ms}-{random}`
 **Rationale**:
 - Policy traceability in signature
 - Millisecond precision for temporal ordering
@@ -50,7 +50,7 @@ Tier-2 Semantic Envelopes provide a structured approach to workflow composition 
 - Clear semantic structure
 
 **Format Details**:
-- `tier2-semantic-`: Prefix identifying Tier-2 semantic envelopes
+- `tier2-semantic-`: Prefix identifying Tier-2 structural envelopes
 - `{policy}`: Orchestration policy applied (e.g., "default")
 - `{timestamp_ms}`: Millisecond timestamp for ordering
 - `{random}`: Random UUID component for uniqueness guarantee
