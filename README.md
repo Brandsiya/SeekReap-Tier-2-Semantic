@@ -1,69 +1,103 @@
-# 🏛️ SeekReap Tier-2: Semantic Orchestration Layer
+# SeekReap — Tier-2 Semantic Layer
 
-## PURPOSE
-Tier-2 is the **semantic orchestration layer** that consumes Tier-1 atomic behaviors and adds semantic meaning, policy, and governance through orchestration patterns.
-
-## ARCHITECTURAL STATUS
-- **Status**: Active orchestration layer (Purification Phase 1 & 2 Complete)
-- **Tier-0 Authority**: Normative (protocol definition)
-- **Tier-1 Consumption**: Read-only (atomic behaviors)
-- **Tier-2 Role**: Semantic orchestration (adds meaning)
-- **Tier-3+ Target**: Semantic processing layers
-
-## STRUCTURE
-```
-tier2_core/
-├── behaviors/          # Semantic behavior implementations
-│   ├── __init__.py
-│   └── constants.py    # Semantic constants
-├── orchestration/      # Workflow composition
-│   ├── __init__.py
-│   └── tier2_orchestrator.py  # Main orchestration logic
-└── __init__.py
-
-tier2_contracts/        # Structural contract definitions
-tier2_tests/           # Verification test suite
-tier2_examples/        # Usage demonstrations
-tier2_utils/           # Helper functions (non-semantic)
-docs/                  # Architecture documentation
-```
-
-## QUICK START
-```bash
-# Install
-pip install -e .
-
-# Run tests
-pytest tier2_tests/
-
-# Explore examples
-python tier2_examples/clean_usage.py
-```
-
-## ARCHITECTURAL PRINCIPLES
-1. **Tier-0 Supremacy**: Never redefine protocol invariants
-2. **Tier-1 Immutability**: Consume, don't modify atomic behaviors
-3. **Semantic Clarity**: Add meaning through orchestration, not redefinition
-4. **Deterministic Outputs**: Same inputs → same outputs always
-5. **Clear Boundaries**: Strict separation between tiers
-
-## DOCUMENTATION
-All architecture docs are in `docs/`:
-- `TIER2_ARCHITECTURAL_CHARTER.md` - Purpose, boundaries, authority
-- `TIER2_LOCK_SURFACE.md` - Mutable vs immutable surfaces
-- `ARCHIVE/` - Original documentation for reference
-
-## CONSUMPTION PATTERN
-```
-Tier-3 → Tier-2 (orchestration) → Tier-1 (atomic) → Tier-0 (protocol)
-```
-
-## PURIFICATION STATUS
-✅ Phase 1: Folder structure standardized
-✅ Phase 2: Source code organized and annotated
-🔲 Phase 3: Enhanced testing & CI/CD (next)
-🔲 Phase 4: Lock & freeze governance
+**Architectural Status:** 🔒 Locked  
+**Tier Role:** Semantic Authority  
+**Scope:** Meaning assignment, semantic validation, envelope interpretation  
+**Language:** Python (pure, dependency-minimal)
 
 ---
-**Tier-2 is an active orchestration layer under architectural governance.**
-**All changes must respect Tier-0 authority and Tier-1 immutability.**
+
+## Overview
+
+This repository implements **Tier-2 of the SeekReap system**, the **Semantic Layer**.
+
+Tier-2 is the **exclusive semantic authority** within the SeekReap architecture.  
+It is responsible for **assigning, validating, normalizing, and preserving meaning** across all envelopes that flow through the system.
+
+All higher tiers (Tier-3 and above) **consume semantics defined here**.  
+All lower tiers (Tier-1 and Tier-0) **must not interpret meaning**.
+
+> **No other tier may define, infer, mutate, or reinterpret semantics.**
+
+This rule is absolute.
+
+---
+
+## Architectural Position
+
+SeekReap is organized as a strict, non-overlapping tiered system:
+
+| Tier | Responsibility |
+|-----:|----------------|
+| Tier-0 | Governance, invariants, architectural law |
+| Tier-1 | Transport, serialization, cryptographic integrity |
+| **Tier-2** | **Semantic definition and validation (this repository)** |
+| Tier-3 | Domain libraries consuming Tier-2 semantics |
+| Tier-4+ | Applications, UIs, storage, infrastructure |
+
+Tier-2 forms the **semantic bridge** between raw structure (Tier-1) and domain behavior (Tier-3).
+
+---
+
+## Core Responsibilities of Tier-2
+
+Tier-2 is responsible for **semantic correctness**, not execution.
+
+Specifically, Tier-2:
+
+- Defines **semantic envelopes** and their required structure
+- Assigns **meaning** to structurally valid inputs
+- Validates **semantic invariants**
+- Enforces **semantic immutability**
+- Performs **semantic normalization and transformation**
+- Guarantees **semantic consistency across all consuming tiers**
+
+Tier-2 **does not**:
+- Handle I/O, networking, or storage
+- Execute business logic or workflows
+- Control runtime behavior
+- Bind to UI frameworks, databases, or cloud services
+
+Any such behavior belongs strictly to Tier-3 or above.
+
+---
+
+## Semantic Authority Rule (Hard Constraint)
+
+> **All semantics originate in Tier-2.**
+
+- Tier-3 libraries **must not invent or redefine meaning**
+- Tier-1 must treat semantic envelopes as **opaque**
+- Tier-0 governs *who* may change semantics, not *what* semantics mean
+
+Violating this rule constitutes an **architectural breach**.
+
+---
+
+## Repository Structure
+
+```text
+SeekReap-Tier-2-Semantic/
+├── src/
+│   └── tier2_core/
+│       ├── envelopes/        # Semantic envelope definitions
+│       ├── validation/       # Semantic invariant enforcement
+│       ├── transformation/  # Semantic normalization & mapping
+│       └── orchestration/    # Semantic flow coordination (non-runtime)
+│
+├── contracts/
+│   └── minimal/              # Formal semantic contracts
+│
+├── examples/                 # Demonstrative semantic usage
+├── tests/
+│   ├── property/             # Property-based semantic tests
+│   └── unit/                 # Deterministic semantic validation
+│
+├── docs/
+│   ├── architecture/         # Architecture & decision records
+│   └── archive/              # Historical (pre-freeze) documents
+│
+├── SEMANTIC_RESPONSIBILITY_CHARTER.md
+├── ARCHITECTURAL_LOCK_TIER2.md
+├── README.md
+└── setup.py / pyproject.toml
