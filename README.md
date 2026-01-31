@@ -1,3 +1,9 @@
+
+echo "> ğTier-2 has been formally frozen.Ÿ”’ STATUS: TIER-2 FROZEN" > README.md
+Authoritative governance is defined in:
+docs/governance/TIER_2_FREEZE_DECLARATION.md
+
+---
 # ğŸ›ï¸ SeekReap Tier-2: Semantic Orchestration Layer
 
 ## PURPOSE
