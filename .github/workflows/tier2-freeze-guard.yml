@@ -12,3 +12,5 @@ jobs:
       - name: Block semantic changes
         run: |
           git diff --name-only origin/main...HEAD | grep -E 'src|semantic|schema|contract' && exit 1 || true
+      - name: Enforce README governance lock
+        run: scripts/guard_readme.sh
