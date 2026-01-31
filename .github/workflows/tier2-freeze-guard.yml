@@ -1,0 +1,14 @@
+name: Tier-2 Freeze Guard
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  freeze-enforcement:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Block semantic changes
+        run: |
+          git diff --name-only origin/main...HEAD | grep -E 'src|semantic|schema|contract' && exit 1 || true
