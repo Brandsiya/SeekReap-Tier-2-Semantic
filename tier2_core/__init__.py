@@ -1,24 +1,31 @@
 """
-TIER-2 CORE: Semantic Orchestration Layer
+SeekReap Tier-2 Semantic Orchestration Layer
+Version: 0.1.0-dev
 
-This package contains the core orchestration logic for Tier-2.
-All modules follow SeekReap architectural principles with clear
-separation between tiers and respect for authority hierarchy.
-
-SUB-PACKAGES:
-- behaviors: Semantic behavior implementations
-- orchestration: Workflow composition (prefixed: tier2_*)
-- placeholders: Structural exemplars only
-
-ARCHITECTURAL COMPLIANCE:
-- Tier-0: Protocol invariants respected
-- Tier-1: Atomic behaviors consumed read-only
-- Tier-2: Semantic orchestration provided
-- Tier-3+: Ready for downstream consumption
+This layer consumes Tier-1 atomic behaviors and produces semantic envelopes
+for consumption by Tier-3 decision layers.
 """
 
-__version__ = "1.0.0"
-__author__ = "SeekReap Architectural Team"
-__status__ = "Active Orchestration Layer"
+__version__ = "0.1.0-dev"
 
-__all__ = []
+from .orchestration.envelope import (
+    create_envelope,
+    create_envelope_from_tier1,
+)
+
+from .orchestration.validation import (
+    validate_envelope_structure,
+    validate_envelope_semantics,
+    validate_policy_compliance,
+)
+
+__all__ = [
+    # Envelope creation
+    "create_envelope",
+    "create_envelope_from_tier1",
+    
+    # Validation
+    "validate_envelope_structure",
+    "validate_envelope_semantics",
+    "validate_policy_compliance",
+]
