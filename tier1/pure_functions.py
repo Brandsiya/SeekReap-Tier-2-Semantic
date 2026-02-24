@@ -1,7 +1,7 @@
 import uuid
 from typing import Dict, List, Any
 from dataclasses import dataclass
-from taxonomy import TAXONOMY, VALID_TYPES
+from tier1.taxonomy import TAXONOMY, VALID_TYPES
 from datetime import datetime
 
 @dataclass
